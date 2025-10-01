@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Workout Timer - HIIT, Tabata, EMOM, Custom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #999;
+            font-weight: 300;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0 60px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #ccc;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .features {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .features-intro {
+            font-size: 1.2rem;
+            color: #bbb;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            background: #0a0a0a;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: left;
+        }
+
+        .feature-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            color: #999;
+            line-height: 1.7;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 16px 48px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .workout-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 60px 0;
+        }
+
+        .workout-card {
+            background: #111;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .workout-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .workout-card.tabata {
+            border-color: #FF4444;
+        }
+
+        .workout-card.tabata:hover {
+            box-shadow: 0 10px 40px rgba(255, 68, 68, 0.4);
+        }
+
+        .workout-card.amrap {
+            border-color: #44FF44;
+        }
+
+        .workout-card.amrap:hover {
+            box-shadow: 0 10px 40px rgba(68, 255, 68, 0.4);
+        }
+
+        .workout-card.emom {
+            border-color: #4444FF;
+        }
+
+        .workout-card.emom:hover {
+            box-shadow: 0 10px 40px rgba(68, 68, 255, 0.4);
+        }
+
+        .workout-card.custom {
+            border-color: #FFD700;
+        }
+
+        .workout-card.custom:hover {
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .workout-card.import {
+            border-color: #9E44FF;
+        }
+
+        .workout-card.import:hover {
+            box-shadow: 0 10px 40px rgba(158, 68, 255, 0.4);
+        }
+
+        .workout-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .tabata .workout-icon {
+            background: #FF4444;
+        }
+
+        .amrap .workout-icon {
+            background: #44FF44;
+            color: #000;
+        }
+
+        .emom .workout-icon {
+            background: #4444FF;
+        }
+
+        .custom .workout-icon {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .import .workout-icon {
+            background: #9E44FF;
+        }
+
+        .workout-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .workout-card p {
+            color: #999;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #0a0a0a;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .workout-types {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Multi Workout Timer</h1>
+            <p class="subtitle">HIIT, Tabata, EMOM, Custom</p>
+        </header>
+
+        <section class="hero">
+            <p>Create and customize perfect workout timers for your training sessions.<br>Available now on iOS.</p>
+            <a href="#" class="download-btn">Download on the App Store</a>
+        </section>
+
+        <section class="features">
+            <h2>Take Your Workouts to the Next Level</h2>
+            <p class="features-intro">Stop wasting time manually timing your intervals. Multi Workout Timer handles the timing so you can focus on what matters - crushing your workout goals.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>⚡ Quick Setup</h3>
+                    <p>Create your perfect timer in seconds. Choose your workout type, set your intervals, and start training immediately.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎯 Stay Focused</h3>
+                    <p>Clear audio cues and visual indicators keep you in the zone. No more checking your watch mid-burpee.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>💪 Proven Results</h3>
+                    <p>Structured interval training burns more calories and builds endurance faster than traditional workouts.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔄 Endless Variety</h3>
+                    <p>From classic Tabata to custom combinations - create unlimited workout variations to keep training fresh.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="workout-types">
+            <div class="workout-card tabata">
+                <div class="workout-icon">T</div>
+                <h3>TABATA</h3>
+                <p>High-intensity interval training with customizable work and rest periods</p>
+            </div>
+
+            <div class="workout-card amrap">
+                <div class="workout-icon">A</div>
+                <h3>AMRAP</h3>
+                <p>As Many Rounds As Possible - push yourself to the limit</p>
+            </div>
+
+            <div class="workout-card emom">
+                <div class="workout-icon">E</div>
+                <h3>EMOM</h3>
+                <p>Every Minute On the Minute - structured interval training</p>
+            </div>
+
+            <div class="workout-card custom">
+                <div class="workout-icon">C</div>
+                <h3>CUSTOM</h3>
+                <p>Build your own unique workout timer combinations</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="mailto:multiworkouttimer@outlook.it">Contact</a>
+            <a href="https://multiworkouttimer.github.io/termOfService.html">Terms of Service</a>
+            <a href="https://multiworkouttimer.github.io/privacy.html">Privacy Policy</a>
+        </div>
+    </footer>
+</body>
+</html>
